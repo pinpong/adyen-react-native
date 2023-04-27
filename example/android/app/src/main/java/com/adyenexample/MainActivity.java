@@ -24,9 +24,17 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    super.onCreate(null);
     Log.d(TAG, "onCreate");
+    ((MainApplication) getApplication()).addActivityToStack(this.getClass());
     AdyenCheckout.setLauncherActivity(this);
+  }
+
+    @Override
+    protected void onDestroy() {
+      super.onDestroy();
+      Log.d(TAG, "onDestroy");
+      ((MainApplication) getApplication()).removeActivityFromStack(this.getClass());
   }
 
   @Override
