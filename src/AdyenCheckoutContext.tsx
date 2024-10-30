@@ -25,6 +25,7 @@ import {
   PaymentDetailsData,
   StoredPaymentMethod,
   SubmitModel,
+  Order,
 } from './core/types';
 import { Configuration } from './core/configurations/Configuration';
 import { checkPaymentMethodsResponse, checkConfiguration } from './core/utils';
@@ -39,6 +40,10 @@ import {
   RemovesStoredPayment,
 } from './wrappers/RemoveStoredPaymentComponentWrapper';
 import { AddressLookupItem } from './core/configurations/AddressLookup';
+import {
+  isPartialPaymentsComponent,
+  PartialPaymentComponent,
+} from './wrappers/PartialPaymentsComponentWrapper';
 
 /**
  * Returns AdyenCheckout context. This context allows you to initiate payment with Drop-in or any payment method available in `paymentMethods` collection.
@@ -222,13 +227,62 @@ const AdyenCheckout: React.FC<AdyenCheckoutProps> = ({
             async (prompt: string) => {
               configuration.card?.onUpdateAddress?.(prompt, nativeModule);
             }
-          )
-        );
-        subscriptions.current.push(
+          ),
           eventEmitter.addListener(
             Event.onAddressConfirm,
             (address: AddressLookupItem) => {
               configuration.card?.onConfirmAddress?.(address, nativeModule);
+            }
+          )
+        );
+      }
+
+      if (isPartialPaymentsComponent(nativeComponent)) {
+        subscriptions.current.push(
+          eventEmitter.addListener(
+            Event.onCheckBalance,
+            async (paymentData) => {
+              configuration.partialPayment?.onBalanceCheck?.(
+                paymentData,
+                (balance) => {
+                  (
+                    nativeComponent as unknown as PartialPaymentComponent
+                  ).provideBalance(true, balance, undefined);
+                },
+                (error: Error) => {
+                  console.debug('Balance error: ' + JSON.stringify(error));
+                  (
+                    nativeComponent as unknown as PartialPaymentComponent
+                  ).provideBalance(false, undefined, error);
+                }
+              );
+            }
+          ),
+          eventEmitter.addListener(Event.onRequestOrder, () => {
+            configuration.partialPayment?.onOrderRequest?.(
+              (order: Order) => {
+                (
+                  nativeComponent as unknown as PartialPaymentComponent
+                ).provideOrder(true, order, undefined);
+              },
+              (error: Error) => {
+                console.debug('Order error: ' + JSON.stringify(error));
+                (
+                  nativeComponent as unknown as PartialPaymentComponent
+                ).provideOrder(false, undefined, error);
+              }
+            );
+          }),
+          eventEmitter.addListener(
+            Event.onCancelOrder,
+            ({ order, shouldUpdatePaymentMethods }) => {
+              let component =
+                nativeComponent as unknown as PartialPaymentComponent;
+              configuration.partialPayment?.onOrderCancel?.(
+                order,
+                shouldUpdatePaymentMethods,
+                component
+              );
             }
           )
         );
@@ -250,7 +304,6 @@ const AdyenCheckout: React.FC<AdyenCheckoutProps> = ({
       );
 
       checkConfiguration(config);
-
       startEventListeners(config, nativeComponent);
 
       if (paymentMethod) {
