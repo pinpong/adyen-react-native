@@ -27,10 +27,6 @@ export interface PartialPaymentComponent {
     order: Order | undefined,
     error: Error | undefined
   ): void;
-  providePaymentMethods(
-    paymentMethods: PaymentMethodsResponse,
-    order: Order | undefined
-  ): void;
 }
 
 export function isPartialPaymentsComponent(

@@ -60,7 +60,7 @@ open class AdvancedCheckoutService : DropInService() {
 
     override fun onOrderCancel(order: Order, shouldUpdatePaymentMethods: Boolean) {
         val listener = CheckoutProxy.shared.componentListener
-        listener?.onOrderCancel(order, false)
+        listener?.onOrderCancel(order, shouldUpdatePaymentMethods)
     }
 
     companion object {

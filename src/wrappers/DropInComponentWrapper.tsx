@@ -1,5 +1,6 @@
 import { AddressLookupItem } from '../core/configurations/AddressLookup';
 import { Balance, Order, PaymentMethodsResponse } from '../core/types';
+import { DropInModule } from '../modules/DropInModule';
 import { ActionHandlingComponentWrapper } from './ActionHandlingComponentWrapper';
 import { AddressLookup } from './AddressLookupComponentWrapper';
 import { PartialPaymentComponent } from './PartialPaymentsComponentWrapper';
@@ -7,8 +8,14 @@ import { RemovesStoredPayment } from './RemoveStoredPaymentComponentWrapper';
 
 export class DropInComponentWrapper
   extends ActionHandlingComponentWrapper
-  implements AddressLookup, RemovesStoredPayment, PartialPaymentComponent
+  implements
+    DropInModule,
+    AddressLookup,
+    RemovesStoredPayment,
+    PartialPaymentComponent
 {
+  getReturnURL!: () => Promise<string>;
+
   removeStored(success: boolean): void {
     this.nativeModule.removeStored(success);
   }

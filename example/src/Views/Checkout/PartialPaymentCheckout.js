@@ -92,13 +92,13 @@ const PartialPaymentCheckout = ({ navigation }) => {
     async (
       /** @type {import('../../Types/index').PaymentResponse} */
       result,
-      /** @type {import('@adyen/react-native').AdyenActionComponent & import('@adyen/react-native').PartialPaymentComponent} */
-      nativeComponent,
+      /** @type {import('@adyen/react-native').DropInModule} */
+      dropInComponent,
     ) => {
       var success = isSuccess(result);
       var outcome = result.resultCode.toString();
       if (result.action) {
-        nativeComponent.handle(result.action);
+        dropInComponent.handle(result.action);
         return;
       } else if (isRefusedInPartialPaymentFlow(result)) {
         success = false;
@@ -110,7 +110,7 @@ const PartialPaymentCheckout = ({ navigation }) => {
             pspReference: result?.order?.pspReference
           };
           let paymentMethods = await ApiClient.paymentMethods(configuration, order);
-          nativeComponent.providePaymentMethods(paymentMethods, order);
+          dropInComponent.providePaymentMethods(paymentMethods, order);
           return;
         } catch (error) {
           success = false;
@@ -118,7 +118,7 @@ const PartialPaymentCheckout = ({ navigation }) => {
         }
       }
       console.log(`Payment ${success ? 'success' : 'failure'} : ${outcome}`);
-      nativeComponent.hide(success);
+      dropInComponent.hide(success);
       navigation.popToTop();
       navigation.push('Result', { result: outcome });
     },
@@ -144,14 +144,12 @@ const PartialPaymentCheckout = ({ navigation }) => {
     async (paymentData, resolve, reject) => {
       try {
         let response = await ApiClient.checkBalance(paymentData, configuration);
-        let result = response.resultCode
-        console.debug("Balance: " + result)
         resolve({
           balance: response.balance,
           transactionLimit: response.transactionLimit
         });
       } catch (e) {
-        console.error("Balance wasn't checkeed: " + JSON.stringify(e))
+        console.error("Balance check error: " + JSON.stringify(e))
         reject(e);
       }
     },
@@ -164,18 +162,26 @@ const PartialPaymentCheckout = ({ navigation }) => {
         let response = await ApiClient.requestOrder(configuration);
         resolve(response);
       } catch (e) {
-        console.error("Order wasn't requested: " + JSON.stringify(e))
+        console.error("Order request error: " + JSON.stringify(e))
         reject(e);
       }
     },
     [configuration],
   );
 
-  const canceltOrder = useCallback(
-    async (/** @type {import('@adyen/react-native').Order} */ order) => {
-      console.debug("= = on OrderRequest:" + order);
+  const cancelOrder = useCallback(
+    async (
+      /** @type {import('@adyen/react-native').Order} */ order, 
+      /** @type {Boolean} */ shouldUpdatePaymentMethods,
+      /** @type {import('@adyen/react-native').DropInModule} */ dropInComponent) => {
       try {
         await ApiClient.cancelOrder(order, configuration);
+        if (shouldUpdatePaymentMethods) {
+          let paymentMethods = await ApiClient.paymentMethods(configuration, order);
+          dropInComponent.providePaymentMethods(paymentMethods, undefined);
+        } else {
+          dropInComponent.hide(false);
+        }
       } catch (e) {
         console.error("Order wasn't canceled! " + JSON.stringify(e, null, " "));
       }
@@ -216,7 +222,7 @@ const PartialPaymentCheckout = ({ navigation }) => {
               partialPayment: {
                 onBalanceCheck: checkBalance,
                 onOrderRequest: requestOrder,
-                onOrderCancel: canceltOrder
+                onOrderCancel: cancelOrder
               },
             }
           }

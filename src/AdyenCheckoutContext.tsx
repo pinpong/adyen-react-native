@@ -25,6 +25,7 @@ import {
   PaymentDetailsData,
   StoredPaymentMethod,
   SubmitModel,
+  Order,
 } from './core/types';
 import { Configuration } from './core/configurations/Configuration';
 import { checkPaymentMethodsResponse, checkConfiguration } from './core/utils';
@@ -248,7 +249,7 @@ const AdyenCheckout: React.FC<AdyenCheckoutProps> = ({
                     nativeComponent as unknown as PartialPaymentComponent
                   ).provideBalance(true, balance, undefined);
                 },
-                (error) => {
+                (error: Error) => {
                   console.debug('Balance error: ' + JSON.stringify(error));
                   (
                     nativeComponent as unknown as PartialPaymentComponent
@@ -259,12 +260,12 @@ const AdyenCheckout: React.FC<AdyenCheckoutProps> = ({
           ),
           eventEmitter.addListener(Event.onRequestOrder, () => {
             configuration.partialPayment?.onOrderRequest?.(
-              (order) => {
+              (order: Order) => {
                 (
                   nativeComponent as unknown as PartialPaymentComponent
                 ).provideOrder(true, order, undefined);
               },
-              (error) => {
+              (error: Error) => {
                 console.debug('Order error: ' + JSON.stringify(error));
                 (
                   nativeComponent as unknown as PartialPaymentComponent
@@ -272,9 +273,18 @@ const AdyenCheckout: React.FC<AdyenCheckoutProps> = ({
               }
             );
           }),
-          eventEmitter.addListener(Event.onCancelOrder, (order) => {
-            configuration.partialPayment?.onOrderCancel?.(order);
-          })
+          eventEmitter.addListener(
+            Event.onCancelOrder,
+            ({ order, shouldUpdatePaymentMethods }) => {
+              let component =
+                nativeComponent as unknown as PartialPaymentComponent;
+              configuration.partialPayment?.onOrderCancel?.(
+                order,
+                shouldUpdatePaymentMethods,
+                component
+              );
+            }
+          )
         );
       }
     },

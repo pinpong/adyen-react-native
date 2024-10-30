@@ -194,7 +194,10 @@ abstract class BaseModule(context: ReactApplicationContext?) : ReactContextBaseJ
     }
 
     override fun onOrderCancel(order: Order, shouldUpdatePaymentMethods: Boolean) {
-        val jsonObject = Order.SERIALIZER.serialize(order)
+        val jsonObject = JSONObject().apply {
+            this.put(ORDER_KEY, Order.SERIALIZER.serialize(order))
+            this.put(SHOULD_UPDATE_PAYMENT_METHODS_KEY, shouldUpdatePaymentMethods)
+        }
         sendEvent(DID_CANCEL_ORDER, jsonObject)
     }
 
@@ -263,6 +266,7 @@ abstract class BaseModule(context: ReactApplicationContext?) : ReactContextBaseJ
         private const val SESSION_RESULT_KEY = "sessionResult"
         private const val SESSION_DATA_KEY = "sessionData"
         private const val SESSION_ID_KEY = "sessionId"
+        private const val SHOULD_UPDATE_PAYMENT_METHODS_KEY = "shouldUpdatePaymentMethods"
 
         @JvmStatic
         protected var session: CheckoutSession? = null

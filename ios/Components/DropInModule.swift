@@ -238,7 +238,8 @@ extension DropInModule: PartialPaymentDelegate {
     }
 
     func cancelOrder(_ order: Adyen.PartialPaymentOrder, component: any Adyen.Component) {
-        sendEvent(event: .didCancelOrder, body: order.jsonObject)
+        let orderData = CancelOrderData(shouldUpdatePaymentMethods: false, order: order)
+        sendEvent(event: .didCancelOrder, body: orderData.jsonObject)
     }
 
     @objc(providePaymentMethods:order:)
