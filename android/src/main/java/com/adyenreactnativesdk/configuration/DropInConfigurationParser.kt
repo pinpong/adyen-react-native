@@ -13,7 +13,7 @@ class DropInConfigurationParser(config: ReadableMap) {
 
     companion object {
         const val TAG = "DropInConfigurationParser"
-        const val DROPIN_KEY = "dropin"
+        const val ROOT_KEY = "dropin"
         const val SHOW_PRESELECTED_STORED_PAYMENT_METHOD_KEY = "showPreselectedStoredPaymentMethod"
         const val SKIP_LIST_WHEN_SINGLE_PAYMENT_METHOD_KEY = "skipListWhenSinglePaymentMethod"
         const val SHOW_REMOVE_PAYMENT_METHOD_BUTTON_KEY = "showRemovePaymentMethodButton"
@@ -22,8 +22,8 @@ class DropInConfigurationParser(config: ReadableMap) {
     private var config: ReadableMap
 
     init {
-        if (config.hasKey(DROPIN_KEY)) {
-            this.config = config.getMap(DROPIN_KEY)!!
+        if (config.hasKey(ROOT_KEY)) {
+            this.config = config.getMap(ROOT_KEY)!!
         } else {
             this.config = config
         }

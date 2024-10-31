@@ -23,6 +23,7 @@ import com.adyen.checkout.components.core.StoredPaymentMethod
 import com.adyen.checkout.core.exception.CancellationException
 import com.adyen.checkout.core.exception.CheckoutException
 import com.adyen.checkout.dropin.dropIn
+import com.adyen.checkout.giftcard.giftCard
 import com.adyen.checkout.googlepay.GooglePayComponentState
 import com.adyen.checkout.googlepay.googlePay
 import com.adyen.checkout.sessions.core.CheckoutSession
@@ -38,6 +39,7 @@ import com.adyenreactnativesdk.configuration.AnalyticsParser
 import com.adyenreactnativesdk.configuration.CardConfigurationParser
 import com.adyenreactnativesdk.configuration.DropInConfigurationParser
 import com.adyenreactnativesdk.configuration.GooglePayConfigurationParser
+import com.adyenreactnativesdk.configuration.PartialPaymentParser
 import com.adyenreactnativesdk.configuration.RootConfigurationParser
 import com.adyenreactnativesdk.configuration.ThreeDSConfigurationParser
 import com.adyenreactnativesdk.util.AdyenConstants
@@ -233,6 +235,10 @@ abstract class BaseModule(context: ReactApplicationContext?) : ReactContextBaseJ
             adyen3DS2 {
                 val parser = ThreeDSConfigurationParser(json)
                 parser.applyConfiguration(this)
+            }
+            giftCard {
+                val parser = PartialPaymentParser(json)
+                setPinRequired(parser.pinRequired)
             }
         }
     }

@@ -21,7 +21,7 @@ class CardConfigurationParser(config: ReadableMap, private val countryCode: Stri
 
     companion object {
         const val TAG = "CardConfigurationParser"
-        const val CARD_KEY = "card"
+        const val ROOT_KEY = "card"
         const val SHOW_STORE_PAYMENT_FIELD_KEY = "showStorePaymentField"
         const val HOLDER_NAME_REQUIRED_KEY = "holderNameRequired"
         const val HIDE_CVC_STORED_CARD_KEY = "hideCvcStoredCard"
@@ -36,8 +36,8 @@ class CardConfigurationParser(config: ReadableMap, private val countryCode: Stri
     private var config: ReadableMap
 
     init {
-        if (config.hasKey(CARD_KEY)) {
-            this.config = config.getMap(CARD_KEY)!!
+        if (config.hasKey(ROOT_KEY)) {
+            this.config = config.getMap(ROOT_KEY)!!
         } else {
             this.config = config
         }

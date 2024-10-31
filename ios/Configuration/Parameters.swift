@@ -148,6 +148,11 @@ internal enum ApplePayKeys: SubConfig {
     }
 }
 
+internal enum PartialPaymentKey: SubConfig {
+    static var rootKey = "partialPayment"
+    static var pinRequired = "pinRequired"
+}
+
 internal enum StyleKeys: SubConfig {
     static var rootKey = "style"
 }

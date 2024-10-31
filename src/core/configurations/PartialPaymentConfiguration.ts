@@ -2,6 +2,12 @@ import { PartialPaymentComponent } from '../../wrappers/PartialPaymentsComponent
 import { Balance, Order, PaymentMethodData } from '../types';
 
 export interface PartialPaymentConfiguration {
+
+  /**
+   * Indicates whether to show the security code field. Defaults to true.
+   */
+  pinRequired?: boolean;
+
   /**
    * Invoked when the payment component needs a balance check call to be performed. Call /balance API.
    * @param paymentData The collection that contains the type of the payment method and its specific information.

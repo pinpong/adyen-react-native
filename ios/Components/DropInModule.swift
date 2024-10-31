@@ -85,12 +85,13 @@ internal final class DropInModule: BaseModule {
            let url = URL(string: requestorAppUrl) {
             config.actionComponent.threeDS.requestorAppURL = url
         }
-
         if let payment = context.payment {
             (try? ApplepayConfigurationParser(configuration: configuration).buildConfiguration(payment: payment)).map {
                 config.applePay = $0
             }
         }
+        let partialPaymentParser = PartialPaymentParser(configuration: configuration)
+        config.giftCard.showsSecurityCodeField = partialPaymentParser.pinRequired
 
         SessionHelperModule.sessionListener = self
         let component = DropInComponent(paymentMethods: paymentMethods,
