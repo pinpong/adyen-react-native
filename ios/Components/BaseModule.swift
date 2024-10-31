@@ -236,6 +236,12 @@ extension BaseModule {
             }
         }
     }
+
+    enum Keys {
+        static let sessionId = "sessionId"
+        static let sessionData = "sessionData"
+        static let order = "order"
+    }
 }
 
 extension BaseModule: PresentationDelegate {
@@ -250,7 +256,12 @@ extension BaseModule: PresentationDelegate {
 
 extension BaseModule: SessionResultListener {
     func didComplete(with result: Adyen.AdyenSessionResult) {
-        sendEvent(event: Events.didComplete, body: result.jsonObject)
+        var result = result.jsonObject
+        result[Keys.sessionId] = Self.session?.sessionContext.identifier
+        result[Keys.sessionData] = Self.session?.sessionContext.data
+        result[Keys.order] = self.currentPaymentComponent?.order?.jsonObject
+
+        sendEvent(event: Events.didComplete, body: result)
     }
 
     func didFail(with error: Error) {

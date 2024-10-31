@@ -11,9 +11,11 @@ extension AdyenSessionResult: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.resultCode.rawValue, forKey: .resultCode)
+        try container.encode(self.encodedResult, forKey: .encodedResult)
     }
-
+    
     private enum CodingKeys: String, CodingKey {
         case resultCode
+        case encodedResult = "sessionResult"
     }
 }
