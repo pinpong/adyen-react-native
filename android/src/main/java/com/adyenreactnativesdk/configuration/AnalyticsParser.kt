@@ -11,7 +11,7 @@ class AnalyticsParser(config: ReadableMap) {
     companion object {
         const val ROOT_KEY = "analytics"
         const val ENABLED_KEY = "enabled"
-        const val VERBOSE_LOGS_Key = "verboseLogs"
+        const val VERBOSE_LOGS_KEY = "verboseLogs"
     }
 
     private var config: ReadableMap
@@ -30,8 +30,8 @@ class AnalyticsParser(config: ReadableMap) {
         )
 
     internal val verboseLogs: Boolean
-        get() = config.hasKey(VERBOSE_LOGS_Key) && config.getBoolean(
-            VERBOSE_LOGS_Key
+        get() = config.hasKey(VERBOSE_LOGS_KEY) && config.getBoolean(
+            VERBOSE_LOGS_KEY
         )
 
     val analytics: AnalyticsConfiguration

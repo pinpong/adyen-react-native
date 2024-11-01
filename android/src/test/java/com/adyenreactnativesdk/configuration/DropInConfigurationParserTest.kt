@@ -15,7 +15,7 @@ class DropInConfigurationParserTest {
         val mockBuilder = mock(DropInConfiguration.Builder::class.java)
         val config = WritableMapMock()
         val dropinConfig = WritableMapMock()
-        config.putMap(DropInConfigurationParser.DROPIN_KEY, dropinConfig)
+        config.putMap(DropInConfigurationParser.ROOT_KEY, dropinConfig)
 
         // WHEN
         val sut = DropInConfigurationParser(config)

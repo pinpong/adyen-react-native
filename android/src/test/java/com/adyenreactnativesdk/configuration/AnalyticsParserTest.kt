@@ -11,7 +11,7 @@ class AnalyticsParserTest {
         // GIVEN
         val config = WritableMapMock()
         val analyticsConfig = WritableMapMock()
-        config.putMap(AnalyticsParser.ANALYTICS_KEY, analyticsConfig)
+        config.putMap(AnalyticsParser.ROOT_KEY, analyticsConfig)
 
         // WHEN
         val analyticsParser = AnalyticsParser(config)
@@ -25,8 +25,8 @@ class AnalyticsParserTest {
     fun testIsEnabled() {
         // GIVEN
         val config = WritableMapMock()
-        config.putBoolean(AnalyticsParser.ANALYTICS_ENABLED_KEY, true)
-        config.putBoolean(AnalyticsParser.ANALYTICS_VERBOSE_LOGS, false)
+        config.putBoolean(AnalyticsParser.ENABLED_KEY, true)
+        config.putBoolean(AnalyticsParser.VERBOSE_LOGS_KEY, false)
 
 
         // WHEN
@@ -41,8 +41,8 @@ class AnalyticsParserTest {
     fun testIsNotEnabled() {
         // GIVEN
         val config = WritableMapMock()
-        config.putBoolean(AnalyticsParser.ANALYTICS_ENABLED_KEY, false)
-        config.putBoolean(AnalyticsParser.ANALYTICS_VERBOSE_LOGS, true)
+        config.putBoolean(AnalyticsParser.ENABLED_KEY, false)
+        config.putBoolean(AnalyticsParser.VERBOSE_LOGS_KEY, true)
 
         // WHEN
         val analyticsParser = AnalyticsParser(config)
