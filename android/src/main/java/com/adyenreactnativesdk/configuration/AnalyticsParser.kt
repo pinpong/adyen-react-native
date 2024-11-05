@@ -25,14 +25,10 @@ class AnalyticsParser(config: ReadableMap) {
     }
 
     private val analyticsEnabled: Boolean
-        get() = config.hasKey(ENABLED_KEY) && config.getBoolean(
-            ENABLED_KEY
-        )
+        get() = if (config.hasKey(ENABLED_KEY)) config.getBoolean(ENABLED_KEY) else true
 
     internal val verboseLogs: Boolean
-        get() = config.hasKey(VERBOSE_LOGS_KEY) && config.getBoolean(
-            VERBOSE_LOGS_KEY
-        )
+        get() = config.hasKey(VERBOSE_LOGS_KEY) && config.getBoolean(VERBOSE_LOGS_KEY)
 
     val analytics: AnalyticsConfiguration
         get() {

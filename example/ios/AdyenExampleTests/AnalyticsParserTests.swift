@@ -18,15 +18,27 @@
       XCTAssertFalse(sut.verboseLogsOn)
     }
 
-    func testRequiredPinFalse() {
-      let dict: [String : Any] = ["isEnabled": false as NSNumber]
+    func testEnableAnalyticFalse() {
+      let dict: [String : Any] = ["enabled": false as NSNumber]
       let sut = AnalyticsParser(configuration: dict as NSDictionary)
       XCTAssertFalse(sut.analyticsOn)
     }
 
-    func testRequiredPinTrue() {
-      let dict: [String : Any] = ["verboseLogsOn": true as NSNumber]
+    func testEnableAnalyticTrue() {
+      let dict: [String : Any] = ["enabled": true as NSNumber]
+      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      XCTAssertTrue(sut.analyticsOn)
+    }
+
+    func testVerboseLogsTrue() {
+      let dict: [String : Any] = ["verboseLogs": true as NSNumber]
       let sut = AnalyticsParser(configuration: dict as NSDictionary)
       XCTAssertTrue(sut.verboseLogsOn)
+    }
+
+    func testVerboseLogsFalse() {
+      let dict: [String : Any] = ["verboseLogs": false as NSNumber]
+      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      XCTAssertFalse(sut.verboseLogsOn)
     }
   }
