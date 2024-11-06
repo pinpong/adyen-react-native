@@ -30,9 +30,9 @@ class MainActivity : ReactActivity() {
         AdyenCheckout.setLauncherActivity(this);
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent?.let { AdyenCheckout.handleIntent(it) };
+        intent.let { AdyenCheckout.handleIntent(it) };
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
