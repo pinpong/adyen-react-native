@@ -17,7 +17,7 @@ class AnalyticsParserTest {
         val analyticsParser = AnalyticsParser(config)
 
         // THEN
-        Assert.assertSame(analyticsParser.analytics.level, AnalyticsLevel.NONE)
+        Assert.assertSame(analyticsParser.analytics.level, AnalyticsLevel.ALL)
         Assert.assertFalse(analyticsParser.verboseLogs)
     }
 
