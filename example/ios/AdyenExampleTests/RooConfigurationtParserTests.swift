@@ -11,8 +11,7 @@ import Adyen
 class RootParserTests: XCTestCase {
 
   func testInit() {
-    let dict: [String : Any] = [:]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: [:])
     XCTAssertNotNil(sut)
     XCTAssertEqual(sut.environment, .test)
     XCTAssertNil(sut.amount)
@@ -21,78 +20,66 @@ class RootParserTests: XCTestCase {
   }
 
   func testEUEnvironment() {
-    let dict: [String : Any] = ["environment": "live-eu"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["environment": "live-eu"])
     XCTAssertEqual(sut.environment, .liveEurope)
   }
 
   func testIndiaEnvironment() {
-    let dict: [String : Any] = ["environment": "live-in"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["environment": "live-in"])
     XCTAssertEqual(sut.environment, .liveIndia)
   }
 
   func testUSEnvironment() {
-    let dict: [String : Any] = ["environment": "live-us"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["environment": "live-us"])
     XCTAssertEqual(sut.environment, .liveUnitedStates)
   }
 
   func testAustraliaEnvironment() {
-    let dict: [String : Any] = ["environment": "live-au"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["environment": "live-au"])
     XCTAssertEqual(sut.environment, .liveAustralia)
   }
 
   func testAPACEnvironment() {
-    let dict: [String : Any] = ["environment": "live-apse"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration:  ["environment": "live-apse"])
     XCTAssertEqual(sut.environment, .liveApse)
   }
 
   func testClientKey() {
-    let dict: [String : Any] = ["clientKey": "client-key"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["clientKey": "client-key"])
     XCTAssertEqual(sut.clientKey, "client-key")
   }
 
   func testAmount() {
-    let dict: [String : Any] = ["amount": ["value": 100, "currency": "EUR"]]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["amount": ["value": 100, "currency": "EUR"]])
     XCTAssertEqual(sut.amount?.value, 100)
     XCTAssertEqual(sut.amount?.currencyCode, "EUR")
   }
 
   func testAmountAsString() {
-    let dict: [String : Any] = ["amount": ["value": "100", "currency": "EUR"]]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["amount": ["value": "100", "currency": "EUR"]])
     XCTAssertEqual(sut.amount?.value, 100)
     XCTAssertEqual(sut.amount?.currencyCode, "EUR")
   }
 
   func testAmountAsFloat() {
-    let dict: [String : Any] = ["amount": ["value": 100.3, "currency": "EUR"]]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["amount": ["value": 100.3, "currency": "EUR"]])
     XCTAssertEqual(sut.amount?.value, 100)
     XCTAssertEqual(sut.amount?.currencyCode, "EUR")
   }
 
   func testCountryCode() {
-    let dict: [String : Any] = ["countryCode": "US"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["countryCode": "US"])
     XCTAssertEqual(sut.countryCode, "US")
   }
 
   func testPayment() {
-    let dict: [String : Any] = ["amount": ["value": 100, "currency": "EUR"], "countryCode": "US"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["amount": ["value": 100, "currency": "EUR"], "countryCode": "US"])
     XCTAssertEqual(sut.payment?.amount.value, 100)
     XCTAssertEqual(sut.payment?.amount.currencyCode, "EUR")
   }
 
   func testShopperLocale() {
-    let dict: [String : Any] = ["locale": "en-US"]
-    let sut = RootConfigurationParser(configuration: dict as NSDictionary)
+    let sut = RootConfigurationParser(configuration: ["locale": "en-US"])
     XCTAssertEqual(sut.shopperLocale, "en-US")
   }
 

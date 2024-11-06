@@ -8,14 +8,10 @@ import Adyen
 
 public struct DropInConfigurationParser {
 
-    private var dict: [String: Any]
+    private var dict: NSDictionary
 
     public init(configuration: NSDictionary) {
-        guard let configuration = configuration as? [String: Any] else {
-            self.dict = [:]
-            return
-        }
-        if let configurationNode = configuration[DropInKeys.rootKey] as? [String: Any] {
+        if let configurationNode = configuration[DropInKeys.rootKey] as? NSDictionary {
             self.dict = configurationNode
         } else {
             self.dict = configuration

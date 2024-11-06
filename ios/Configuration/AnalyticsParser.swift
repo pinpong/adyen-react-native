@@ -8,18 +8,10 @@
 
 public struct AnalyticsParser {
 
-    private var dict: [String: Any]
-
-    init(configuration: [String: Any]) {
-        self.init(configuration: configuration as NSDictionary)
-    }
+    private var dict: NSDictionary
 
     public init(configuration: NSDictionary) {
-        guard let configuration = configuration as? [String: Any] else {
-            self.dict = [:]
-            return
-        }
-        if let configurationNode = configuration[AnalyticsKeys.rootKey] as? [String: Any] {
+        if let configurationNode = configuration[AnalyticsKeys.rootKey] as? NSDictionary {
             self.dict = configurationNode
         } else {
             self.dict = configuration

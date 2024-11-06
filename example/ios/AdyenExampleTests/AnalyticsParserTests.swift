@@ -11,34 +11,29 @@
   class AnalyticsParserTests: XCTestCase {
 
     func testInit() {
-      let dict: [String : Any] = [:]
-      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      let sut = AnalyticsParser(configuration: ["analitics":[:]])
       XCTAssertNotNil(sut)
       XCTAssertTrue(sut.analyticsOn)
       XCTAssertFalse(sut.verboseLogsOn)
     }
 
     func testEnableAnalyticFalse() {
-      let dict: [String : Any] = ["enabled": false as NSNumber]
-      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      let sut = AnalyticsParser(configuration: ["enabled": false as NSNumber])
       XCTAssertFalse(sut.analyticsOn)
     }
 
     func testEnableAnalyticTrue() {
-      let dict: [String : Any] = ["enabled": true as NSNumber]
-      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      let sut = AnalyticsParser(configuration: ["enabled": true as NSNumber])
       XCTAssertTrue(sut.analyticsOn)
     }
 
     func testVerboseLogsTrue() {
-      let dict: [String : Any] = ["verboseLogs": true as NSNumber]
-      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      let sut = AnalyticsParser(configuration: ["verboseLogs": true as NSNumber])
       XCTAssertTrue(sut.verboseLogsOn)
     }
 
     func testVerboseLogsFalse() {
-      let dict: [String : Any] = ["verboseLogs": false as NSNumber]
-      let sut = AnalyticsParser(configuration: dict as NSDictionary)
+      let sut = AnalyticsParser(configuration: ["verboseLogs": false as NSNumber])
       XCTAssertFalse(sut.verboseLogsOn)
     }
   }

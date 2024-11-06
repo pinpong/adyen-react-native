@@ -8,14 +8,10 @@ import Foundation
 
 public struct ThreeDS2ConfigurationParser {
 
-    private var dict: [String: Any]
+    private var dict: NSDictionary
 
     public init(configuration: NSDictionary) {
-        guard let configuration = configuration as? [String: Any] else {
-            self.dict = [:]
-            return
-        }
-        if let configurationNode = configuration[ThreeDSKey.rootKey] as? [String: Any] {
+        if let configurationNode = configuration[ThreeDSKey.rootKey] as? NSDictionary {
             self.dict = configurationNode
         } else {
             self.dict = configuration

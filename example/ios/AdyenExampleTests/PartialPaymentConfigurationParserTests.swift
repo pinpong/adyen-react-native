@@ -12,21 +12,18 @@ import Adyen
 class PartialPaymentParserTests: XCTestCase {
 
   func testInit() {
-    let dict: [String : Any] = [:]
-    let sut = PartialPaymentParser(configuration: dict as NSDictionary)
+    let sut = PartialPaymentParser(configuration: ["partialPayment": [:]])
     XCTAssertNotNil(sut)
     XCTAssertTrue(sut.pinRequired)
   }
 
   func testRequiredPinFalse() {
-    let dict: [String : Any] = ["pinRequired": false as NSNumber]
-    let sut = PartialPaymentParser(configuration: dict as NSDictionary)
+    let sut = PartialPaymentParser(configuration: ["pinRequired": false as NSNumber])
     XCTAssertFalse(sut.pinRequired)
   }
 
   func testRequiredPinTrue() {
-    let dict: [String : Any] = ["pinRequired": true as NSNumber]
-    let sut = PartialPaymentParser(configuration: dict as NSDictionary)
+    let sut = PartialPaymentParser(configuration: ["pinRequired": true as NSNumber])
     XCTAssertTrue(sut.pinRequired)
   }
 }

@@ -8,13 +8,9 @@ import Adyen
 
 public struct RootConfigurationParser {
 
-    private var configuration: [String: Any]
+    private var configuration: NSDictionary
 
     public init(configuration: NSDictionary) {
-        guard let configuration = configuration as? [String: Any] else {
-            self.configuration = [:]
-            return
-        }
         self.configuration = configuration
     }
 
