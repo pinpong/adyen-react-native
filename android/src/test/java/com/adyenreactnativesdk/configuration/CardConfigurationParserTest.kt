@@ -29,7 +29,7 @@ class CardConfigurationParserTest {
         // GIVEN
         val config = WritableMapMock()
         val cardConfig = WritableMapMock()
-        config.putMap(CardConfigurationParser.CARD_KEY, cardConfig)
+        config.putMap(CardConfigurationParser.ROOT_KEY, cardConfig)
 
         // WHEN
         val sut = CardConfigurationParser(config, countryCode = null)

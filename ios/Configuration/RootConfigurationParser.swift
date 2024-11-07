@@ -8,13 +8,9 @@ import Adyen
 
 public struct RootConfigurationParser {
 
-    private var configuration: [String: Any]
+    private var configuration: NSDictionary
 
     public init(configuration: NSDictionary) {
-        guard let configuration = configuration as? [String: Any] else {
-            self.configuration = [:]
-            return
-        }
         self.configuration = configuration
     }
 
@@ -31,7 +27,7 @@ public struct RootConfigurationParser {
 
     public var amount: Amount? {
         guard let paymentObject = configuration[Keys.amount] as? [String: Any],
-              let paymentAmount = paymentObject[Keys.value] as? Int,
+              let paymentAmount = Int.tryCast(paymentObject[Keys.value]),
               let currencyCode = paymentObject[Keys.currency] as? String
         else {
             return nil
@@ -79,5 +75,20 @@ extension RootConfigurationParser {
         }
 
         return AdyenContext(apiContext: apiContext, payment: payment, analyticsConfiguration: analytics)
+    }
+}
+
+extension Int {
+    static func tryCast(_ any: Any?) -> Int? {
+        switch any {
+        case is Int:
+            return any as? Int
+        case is String:
+            return Int(any as! String)
+        case is NSNumber:
+            return (any as! NSNumber).intValue
+        default:
+            return nil
+        }
     }
 }

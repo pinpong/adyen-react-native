@@ -15,7 +15,7 @@ class ThreeDSConfigurationParserTest {
         val mockBuilder = mock(Adyen3DS2Configuration.Builder::class.java)
         val config = WritableMapMock()
         val threedsConfig = WritableMapMock()
-        config.putMap(ThreeDSConfigurationParser.THREEDS2_KEY, threedsConfig)
+        config.putMap(ThreeDSConfigurationParser.ROOT_KEY, threedsConfig)
 
         // WHEN
         val sut = ThreeDSConfigurationParser(config)
@@ -31,7 +31,7 @@ class ThreeDSConfigurationParserTest {
         val mockBuilder = mock(Adyen3DS2Configuration.Builder::class.java)
         val config = WritableMapMock()
         config.putString(
-            ThreeDSConfigurationParser.THREEDS2_REQUESTOR_APP_URL_KEY,
+            ThreeDSConfigurationParser.REQUESTOR_APP_URL_KEY,
             "https://testing.com"
         )
 

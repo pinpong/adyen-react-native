@@ -24,7 +24,7 @@ class GooglePayConfigurationParserTest {
         val config = WritableMapMock()
         val googleConfig = WritableMapMock()
 
-        config.putMap(GooglePayConfigurationParser.GOOGLEPAY_KEY, googleConfig)
+        config.putMap(GooglePayConfigurationParser.ROOT_KEY, googleConfig)
 
         // WHEN
         val sut = GooglePayConfigurationParser(config)

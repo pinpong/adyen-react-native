@@ -9,30 +9,26 @@ import com.facebook.react.bridge.ReadableMap
 class AnalyticsParser(config: ReadableMap) {
 
     companion object {
-        const val ANALYTICS_KEY = "analytics"
-        const val ANALYTICS_ENABLED_KEY = "enabled"
-        const val ANALYTICS_VERBOSE_LOGS = "verboseLogs"
+        const val ROOT_KEY = "analytics"
+        const val ENABLED_KEY = "enabled"
+        const val VERBOSE_LOGS_KEY = "verboseLogs"
     }
 
     private var config: ReadableMap
 
     init {
-        if (config.hasKey(ANALYTICS_KEY)) {
-            this.config = config.getMap(ANALYTICS_KEY)!!
+        if (config.hasKey(ROOT_KEY)) {
+            this.config = config.getMap(ROOT_KEY)!!
         } else {
             this.config = config
         }
     }
 
     private val analyticsEnabled: Boolean
-        get() = config.hasKey(ANALYTICS_ENABLED_KEY) && config.getBoolean(
-            ANALYTICS_ENABLED_KEY
-        )
+        get() = if (config.hasKey(ENABLED_KEY)) config.getBoolean(ENABLED_KEY) else true
 
     internal val verboseLogs: Boolean
-        get() = config.hasKey(ANALYTICS_VERBOSE_LOGS) && config.getBoolean(
-            ANALYTICS_VERBOSE_LOGS
-        )
+        get() = config.hasKey(VERBOSE_LOGS_KEY) && config.getBoolean(VERBOSE_LOGS_KEY)
 
     val analytics: AnalyticsConfiguration
         get() {

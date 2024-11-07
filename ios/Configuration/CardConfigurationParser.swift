@@ -8,16 +8,12 @@ import Adyen
 
 public struct CardConfigurationParser {
 
-    private var dict: [String: Any]
+    private var dict: NSDictionary
     private unowned var delegate: AddressLookupProvider
 
     public init(configuration: NSDictionary, delegate: AddressLookupProvider) {
         self.delegate = delegate
-        guard let configuration = configuration as? [String: Any] else {
-            self.dict = [:]
-            return
-        }
-        if let configurationNode = configuration[CardKeys.rootKey] as? [String: Any] {
+        if let configurationNode = configuration[CardKeys.rootKey] as? NSDictionary {
             self.dict = configurationNode
         } else {
             self.dict = configuration
@@ -140,7 +136,7 @@ extension CardComponent.AddressFormType {
             self = .postalCode
         case "full":
             self = .full
-        case let "lookup":
+        case "lookup":
             self = .lookup(provider: delegate)
         default:
             self = .none
