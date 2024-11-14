@@ -4,7 +4,7 @@
 * set `apiVersion` in `node_modules/@react-native/gradle-plugin/build.gradle.kts` to at least **1.7**
 
 > [!NOTE]
-> Google have introduced new [target API level requirements for Google Play apps](https://support.google.com/googleplay/android-developer/answer/11926878?hl=en) on August 31 2024.
+> Google has introduced new [target API level requirements for Google Play apps](https://support.google.com/googleplay/android-developer/answer/11926878?hl=en) on August 31 2024.
 > React-Native version **73** and below considered deprecated.
 
 ## React-Native v0.72 and below
