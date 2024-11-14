@@ -1,22 +1,11 @@
 [![npm version](https://img.shields.io/npm/v/@adyen/react-native.svg?style=flat-square)](https://www.npmjs.com/package/@adyen/react-native)
 [![Adyen iOS](https://img.shields.io/badge/ios-v5.11.0-brightgreen.svg)](https://github.com/Adyen/adyen-ios/releases/tag/5.11.0)
-[![Adyen Android](https://img.shields.io/badge/android-v5.6.0-brightgreen.svg)](https://github.com/Adyen/adyen-android/releases/tag/5.6.0)
+[![Adyen Android](https://img.shields.io/badge/android-v5.7.1-brightgreen.svg)](https://github.com/Adyen/adyen-android/releases/tag/5.7.1)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Adyen_adyen-react-native&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Adyen_adyen-react-native)
 
-> [!NOTE]
-> Google will introduce new [target API level requirements for Google Play apps](https://support.google.com/googleplay/android-developer/answer/11926878?hl=en) starting August 31 2024.
+> [!Note]
 >
-> For React-Native **73+** no action needed.
->
-> For React-Native **72**:
-> * update Android compileTarget to 34 in `android/build.gradle`
-> * set `classpath("com.android.tools.build:gradle:8.1.4")` in `android/build.gradle`
-> * enable `buildConfig` in `android/app/build.gradle` by adding `android.buildFeatures.buildConfig = true`
-> 
-> For React-Native **before 72**:
-> * update Android compileTarget to 34 in `android/build.gradle`
-
-
+> For compatibility with officially unsupported versions below v0.74 check [this document](docs/Compatibility.md).
 
 ![React Native Logo](https://user-images.githubusercontent.com/2648655/198584674-f0c46e71-1c21-409f-857e-77acaa4daae0.png)
 
